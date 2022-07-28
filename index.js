@@ -1,14 +1,12 @@
-//Plan solution out before writing any code
-//Test each piece as you build to ensure it is working
-//Commit often
+/* Rock, Paper, Scissors game played against computer.  
+Rules of the game:
+rock beats scissors -- scissors beats paper -- paper beats rock*/
 
-
-//Playing against computer-function that will return either rock, paper, or scissors
+//To get the computer's play:
 function getComputerChoice() {
+
     let computerAnswer = Math.floor(Math.random()*3);
-    //console.log(computerAnswer);
-    
-    
+       
     let answer = "";
     if (computerAnswer === 0) {
         answer = "rock";
@@ -19,17 +17,29 @@ function getComputerChoice() {
     }else {
         console.log("Something went wrong.");
     }
-   //console.log(answer);
+
     return answer;
 }
-  // getComputerChoice();
 
-/*
-rock beats scissors -- scissors beats paper -- paper beats rock*/
-  
+//To get users play:
+  function getPlayerSelection() {
+
+    let userInput = prompt("Do you choose Rock, Paper, or Scissors?")
+    userInput = userInput.toLowerCase();
+
+    if (userInput === 'rock' || userInput === 'paper' || userInput === 'scissors'){     
+        return userInput;
+    }else {console.log("Not a valid choice.")}
+
+}
+ //getPlayerSelection();
+
+
+let cs = 0;
+let ps = 0;
+
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toLowerCase();
-    
+ 
     let results;
 
     if (playerSelection === 'rock' && computerSelection === 'scissors') {
@@ -54,77 +64,39 @@ function playRound(playerSelection, computerSelection) {
 
     }else if (playerSelection === 'paper' && computerSelection === 'scissors') {
         results = computerSelection;
-        console.lot("You lose! Scissors beats Paper.");
-    }else {
-        results = playerSelection && computerSelection;
+        console.log("You lose! Scissors beats Paper.");
+
+    }else if (playerSelection === computerSelection) {
+        results = 'tie';
         console.log("It's a tie");
-    }
-    //console.log(results);
+
+    }else {console.log("Something went wrong!")};
+
+        if (results == playerSelection) {
+             ps++;
+        }else if (results == computerSelection) {
+            cs ++;
+        }else {console.log("no points in a tie")};
+       
+    console.log("Player: " + ps);
+    console.log("Computer: " + cs);
+    
     return results;
-
    }
-/*
-function game() {
-    for (let i = 0; i < 5; i++) {
-         playRound(playerSelection, computerSelection);
+ 
+function playGame() {
+     
+    for (let i = 0; i < 5; i++) {               
+         //  play game 
+        const playerSelection = getPlayerSelection();
+        const computerSelection = getComputerChoice();
+        console.log(playRound(playerSelection, computerSelection));
     }
- Issues: 
- 1. How am I going to store the results of each round?
- 2. How is winner determined?
- 3. Prompt to get input from the user
-
-    STUFF FROM JS BOOK
-   let roundNumber = 0;
-   let msg = '';
-   
-   roundNumber =  (i + 1);
-   msg += "Round: " + roundNumber + ": ";
-
-   msg += scores[i] + '<br />';
-   console.log(msg);
+        //store the results
+    if (ps > cs) {
+        console.log("Congrats...Player Wins!!")
+    } else if (cs > ps) {
+        console.log("Too bad, Computer Wins.")
+    }else {console.log("It's a Tie Game. Whomp whomp!")}   
 }
-*/
-
-/*
-    const playerSelection = "rock";
-    const computerSelection = getComputerChoice();
-    console.log(playRound(playerSelection, computerSelection));
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-/* FROM BEGINNING THOUGHT PROCESS
-
-choice is going to return a string
-choice will either be one of 3 choices
-how to make it random
-
-let choice = "rock" || "paper" || "scissors"; this doesnt seem to make sense
-math.Floor(math.Random()*100) this makes a random # from 1 to 100 i think
-so would the same thing * 3 make a random # between 1 and 3?
-
-First:
-let computerAnswer = Math.floor(Math.random()*3); this would possibly make the number
-**actually had the capital wrong/fixed/output is either 0, 1, or 2
-Then:
-if (computerAnswer === 0) {
-    choice === "rock"
-}else if (computerAnswer === 1) {
-    choice === "paper"
-}else if (computerAnswer === 2) {
-    choice === "scissors"
-}else {
-    console.log("Something went wrong.")
-}
-
-
-*/
+    playGame();
